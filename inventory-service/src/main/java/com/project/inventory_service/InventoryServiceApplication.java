@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Bean;
 import com.project.inventory_service.repository.inventoryRepository;
 
 @SpringBootApplication
+
 public class InventoryServiceApplication {
 
 	public static void main(String[] args) {
