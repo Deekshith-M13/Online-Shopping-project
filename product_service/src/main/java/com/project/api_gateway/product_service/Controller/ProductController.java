@@ -3,6 +3,7 @@ package com.project.api_gateway.product_service.Controller;
 import com.project.api_gateway.product_service.service.ProductService;
 import com.project.api_gateway.product_service.dto.ProductRequest;
 import com.project.api_gateway.product_service.dto.ProductResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,6 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/product")
+@Slf4j
 public class ProductController {
 
     private final ProductService productService;
@@ -27,6 +29,7 @@ public class ProductController {
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<ProductResponse> getAllProducts() {
+        log.info("Product Service under excecution");
         return productService.getAllProducts();
     }
 }
