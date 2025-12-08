@@ -48,7 +48,7 @@ A complete **online shopping platform** built using **microservices architecture
 ```
                                     ┌─────────────────┐
                                     │   API Gateway   │
-                                    │   (Port 8080)   │
+                                    │   (Port 8100)   │
                                     └────────┬────────┘
                                              │
                     ┌────────────────────────┼────────────────────────┐
@@ -252,7 +252,7 @@ cd notification-service && mvn spring-boot:run
 
 | Service | Port |
 |---------|------|
-| API Gateway | 8080 |
+| API Gateway | 8100 |
 | Product Service | 8080 |
 | Order Service | 8081 |
 | Inventory Service | 8082 |
@@ -420,6 +420,7 @@ Key configuration files:
 - `pom.xml`: Maven dependencies and build configuration
 
 
+
 ## 📝 License
 
 This project is open source and available under the [MIT License](LICENSE).
@@ -428,4 +429,3 @@ This project is open source and available under the [MIT License](LICENSE).
 
 **Deekshith M**
 - GitHub: [@Deekshith-M13](https://github.com/Deekshith-M13)
-
