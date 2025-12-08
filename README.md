@@ -1,5 +1,20 @@
 # 🛒 Online Shopping Microservices Platform
 
+<div align="center">
+
+![Java](https://img.shields.io/badge/Java-21-orange?style=for-the-badge&logo=java)
+![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.x-brightgreen?style=for-the-badge&logo=spring)
+![Spring Cloud](https://img.shields.io/badge/Spring%20Cloud-2025.1.0-brightgreen?style=for-the-badge&logo=spring)
+![MongoDB](https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white)
+![Kafka](https://img.shields.io/badge/Apache%20Kafka-231F20?style=for-the-badge&logo=apache-kafka&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)
+![Keycloak](https://img.shields.io/badge/Keycloak-4D4D4D?style=for-the-badge&logo=keycloak&logoColor=white)
+![Netflix Eureka](https://img.shields.io/badge/Eureka-FF0000?style=for-the-badge&logo=netflix&logoColor=white)
+![Resilience4j](https://img.shields.io/badge/Resilience4j-00C7B7?style=for-the-badge)
+![Zipkin](https://img.shields.io/badge/Zipkin-FF6B6B?style=for-the-badge)
+
+</div>
+
 A comprehensive microservices-based e-commerce platform built with Spring Boot, demonstrating modern cloud-native architecture patterns and best practices.
 
 ## 📋 Table of Contents
