@@ -5,6 +5,7 @@
 ![Java](https://img.shields.io/badge/Java-21-orange?style=for-the-badge&logo=java)
 ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.x-brightgreen?style=for-the-badge&logo=spring)
 ![Spring Cloud](https://img.shields.io/badge/Spring%20Cloud-2025.1.0-brightgreen?style=for-the-badge&logo=spring)
+![MySQL](https://img.shields.io/badge/MySQL-005C84?style=for-the-badge&logo=mysql&logoColor=white)
 ![MongoDB](https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white)
 ![Kafka](https://img.shields.io/badge/Apache%20Kafka-231F20?style=for-the-badge&logo=apache-kafka&logoColor=white)
 ![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)
@@ -15,7 +16,7 @@
 
 </div>
 
-A comprehensive microservices-based e-commerce platform built with Spring Boot, demonstrating modern cloud-native architecture patterns and best practices.
+A cloud-native, production-grade **microservices-based e-commerce platform** built using Spring Boot, Spring Cloud, Kafka, Docker, MySQL, and MongoDB.
 
 ## 📋 Table of Contents
 
@@ -28,10 +29,19 @@ A comprehensive microservices-based e-commerce platform built with Spring Boot, 
 - [Testing](#testing)
 - [API Documentation](#api-documentation)
 - [Monitoring & Observability](#monitoring--observability)
+- [Security](#security)
+- [Docker Deployment](#docker-deployment)
 
 ## 🎯 Overview
 
-This project implements a scalable online shopping platform using microservices architecture. It showcases enterprise-grade patterns including service discovery, API gateway, circuit breakers, and event-driven communication.
+A complete **online shopping platform** built using **microservices architecture**, demonstrating:
+
+- Service discovery
+- API gateway routing
+- Circuit breakers
+- Event-driven communication with Kafka
+- Distributed authentication using Keycloak
+- MySQL + MongoDB hybrid storage
 
 ## 🏗️ Architecture
 
@@ -45,12 +55,12 @@ This project implements a scalable online shopping platform using microservices 
                     │                        │                        │
             ┌───────▼────────┐      ┌───────▼────────┐      ┌───────▼────────┐
             │ Product Service│      │ Order Service  │      │Inventory Service│
-            │  (Port 8080)   │      │  (Port 8081)   │      │  (Port 8082)   │
+            │   (MongoDB)    │      │    (MySQL)     │      │    (MySQL)      │
             └────────────────┘      └───────┬────────┘      └────────────────┘
                                             │
                                     ┌───────▼────────┐
                                     │Notification Svc │
-                                    │  (Kafka)       │
+                                    │    (Kafka)     │
                                     └────────────────┘
                          
                     ┌────────────────────────────────────┐
@@ -59,57 +69,50 @@ This project implements a scalable online shopping platform using microservices 
                     └────────────────────────────────────┘
 ```
 
-### Core Components
-
-- **API Gateway**: Single entry point for all client requests with routing and security
-- **Service Discovery**: Netflix Eureka for dynamic service registration and discovery
-- **Circuit Breaker**: Resilience4j for fault tolerance and graceful degradation
-- **Event Bus**: Apache Kafka for asynchronous inter-service communication
-
 ## 🔧 Microservices
 
-### 1. Product Service
-Manages product catalog and inventory listings.
+### 1️⃣ Product Service (MongoDB)
+Manages product catalog with NoSQL database for flexibility.
 
 **Key Responsibilities:**
 - CRUD operations for products
 - Product search and filtering
-- MongoDB for data persistence
+- Fast NoSQL storage for product data
 
-### 2. Order Service
+### 2️⃣ Order Service (MySQL)
 Handles order processing and orchestration.
 
 **Key Responsibilities:**
 - Order creation and management
-- Inventory verification via synchronous calls
+- Inventory verification via WebClient
 - Order status tracking
 - Event publishing to Kafka
 
-### 3. Inventory Service
+### 3️⃣ Inventory Service (MySQL)
 Manages stock levels and availability.
 
 **Key Responsibilities:**
 - Stock management
-- Availability checks
+- Availability checks via synchronous API
 - Real-time inventory updates
 
-### 4. Notification Service
-Handles all notification delivery.
+### 4️⃣ Notification Service (Kafka Consumer)
+Handles all notification delivery asynchronously.
 
 **Key Responsibilities:**
 - Listens to order events via Kafka
 - Email/SMS notification processing
 - Event-driven architecture
 
-### 5. API Gateway
+### 5️⃣ API Gateway
 Routes and secures all incoming requests.
 
 **Features:**
-- Request routing to appropriate services
+- Single entry point for all services
 - OAuth2 authentication via Keycloak
-- Load balancing
+- Load balancing and routing
 
-### 6. Discovery Server
+### 6️⃣ Discovery Server (Eureka)
 Service registry for dynamic service discovery.
 
 **Features:**
@@ -122,14 +125,19 @@ Service registry for dynamic service discovery.
 ### Core Technologies
 - **Java 21**: Latest LTS version with modern language features
 - **Spring Boot 3.x**: Microservices framework
-- **Spring Cloud**: Microservices patterns implementation
+- **Spring Cloud 2025.x**: Microservices patterns implementation
 
 ### Databases
-- **MongoDB**: NoSQL database for Product Service
+
+| Service | Database |
+|---------|----------|
+| Product Service | **MongoDB** |
+| Order Service | **MySQL** |
+| Inventory Service | **MySQL** |
 
 ### Communication
 - **WebClient**: Reactive HTTP client for inter-service communication
-- **Apache Kafka**: Event streaming platform
+- **Apache Kafka**: Event streaming platform for async messaging
 
 ### Service Discovery & Gateway
 - **Netflix Eureka**: Service registry
@@ -138,6 +146,7 @@ Service registry for dynamic service discovery.
 ### Security
 - **Keycloak**: Identity and access management
 - **OAuth2**: Authentication and authorization
+- **JWT**: Token-based security
 
 ### Resilience
 - **Resilience4j**: Circuit breaker and fault tolerance
@@ -149,7 +158,7 @@ Service registry for dynamic service discovery.
 - **MockMvc**: REST API testing
 
 ### Observability
-- **Spring Boot Actuator**: Application monitoring
+- **Spring Boot Actuator**: Application monitoring and health checks
 
 ### DevOps
 - **Docker**: Containerization
@@ -163,13 +172,14 @@ Dynamic service registration and discovery using Netflix Eureka eliminates hardc
 
 ```java
 @LoadBalanced
+@Bean
 public WebClient.Builder webClientBuilder() {
     return WebClient.builder();
 }
 ```
 
 ### 2. Circuit Breaker Pattern
-Prevents cascading failures using Resilience4j circuit breakers with configurable fallback mechanisms.
+Prevents cascading failures using Resilience4j circuit breakers with configurable fallback mechanisms and automatic retries.
 
 ### 3. Event-Driven Architecture
 Asynchronous communication between services using Kafka for loose coupling and improved scalability.
@@ -178,10 +188,10 @@ Asynchronous communication between services using Kafka for loose coupling and i
 Single entry point for all API requests with centralized security, routing, and cross-cutting concerns.
 
 ### 5. Containerized Testing
-Testcontainers for integration tests with real database instances, ensuring test reliability without local setup.
+Testcontainers for integration tests with real database instances (MySQL, MongoDB, Kafka), ensuring test reliability without local setup.
 
-### 6. Monitoring with Actuator
-Spring Boot Actuator endpoints for health checks and circuit breaker monitoring.
+### 6. Hybrid Database Architecture
+Uses MongoDB for flexible product catalog and MySQL for transactional data (orders, inventory).
 
 ## 🚀 Getting Started
 
@@ -190,7 +200,6 @@ Spring Boot Actuator endpoints for health checks and circuit breaker monitoring.
 - Java 21 or higher
 - Docker and Docker Compose
 - Maven 3.8+
-- (Optional) Keycloak for security features
 
 ### Installation
 
@@ -209,6 +218,7 @@ This starts:
 - Zookeeper (Port 2181)
 - Kafka (Port 9092)
 - MongoDB (Port 27017)
+- MySQL (Port 3306)
 - Keycloak (Port 8181)
 
 3. **Build all services**
@@ -249,6 +259,35 @@ cd notification-service && mvn spring-boot:run
 | Discovery Server | 8761 |
 | Keycloak | 8181 |
 | Kafka | 9092 |
+| MySQL | 3306 |
+| MongoDB | 27017 |
+
+## 🗄️ MySQL Configuration
+
+MySQL is used for **Order Service** and **Inventory Service**.
+
+### Docker Compose Configuration
+```yaml
+mysql:
+  image: mysql:8
+  container_name: mysql-db
+  environment:
+    MYSQL_ROOT_PASSWORD: root
+    MYSQL_DATABASE: orders
+  ports:
+    - "3306:3306"
+  restart: always
+```
+
+### Application Properties
+```properties
+spring.datasource.url=jdbc:mysql://localhost:3306/orders
+spring.datasource.username=root
+spring.datasource.password=root
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL8Dialect
+```
 
 ## 🧪 Testing
 
@@ -261,7 +300,8 @@ mvn test
 
 ### Test Features
 - **Automated Container Management**: Docker containers start/stop automatically
-- **Real Database Testing**: Tests run against actual MongoDB instances
+- **Real Database Testing**: Tests run against actual MySQL and MongoDB instances
+- **Kafka Testing**: Real Kafka broker for integration tests
 - **Clean State**: Fresh database for each test run
 - **CI/CD Ready**: Works in any environment with Docker
 
@@ -328,6 +368,12 @@ http://localhost:8081/actuator/circuitbreakers
 ```
 Monitor circuit breaker states and metrics.
 
+### Actuator Endpoints
+```
+http://localhost:8081/actuator/health
+http://localhost:8081/actuator/metrics
+```
+
 ## 🔒 Security
 
 The application uses Keycloak for OAuth2-based authentication and authorization.
@@ -338,7 +384,10 @@ spring.security.oauth2.resourceserver.jwt.issuer-uri=http://localhost:8181/realm
 ```
 
 ### Obtaining Access Token
-Configure Keycloak realm and obtain JWT tokens for API authentication.
+1. Configure Keycloak realm
+2. Create client application
+3. Obtain JWT tokens for API authentication
+4. Include token in Authorization header
 
 ## 🐳 Docker Deployment
 
@@ -358,6 +407,11 @@ docker-compose build
 docker-compose up -d
 ```
 
+### Stop Services
+```bash
+docker-compose down
+```
+
 ## 🛠️ Configuration
 
 Key configuration files:
@@ -365,9 +419,6 @@ Key configuration files:
 - `docker-compose.yml`: Infrastructure services
 - `pom.xml`: Maven dependencies and build configuration
 
-## 🤝 Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## 📝 License
 
@@ -377,3 +428,4 @@ This project is open source and available under the [MIT License](LICENSE).
 
 **Deekshith M**
 - GitHub: [@Deekshith-M13](https://github.com/Deekshith-M13)
+
