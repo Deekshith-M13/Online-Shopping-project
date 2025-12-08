@@ -389,14 +389,3 @@ This project is open source and available under the [MIT License](LICENSE).
 **Deekshith M**
 - GitHub: [@Deekshith-M13](https://github.com/Deekshith-M13)
 
-## 🙏 Acknowledgments
-
-- Spring Boot and Spring Cloud teams
-- Netflix OSS for Eureka
-- Resilience4j contributors
-- Testcontainers project
-- Apache Kafka community
-
----
-
-⭐ If you find this project helpful, please give it a star!
