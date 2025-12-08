@@ -11,7 +11,7 @@
 ![Keycloak](https://img.shields.io/badge/Keycloak-4D4D4D?style=for-the-badge&logo=keycloak&logoColor=white)
 ![Netflix Eureka](https://img.shields.io/badge/Eureka-FF0000?style=for-the-badge&logo=netflix&logoColor=white)
 ![Resilience4j](https://img.shields.io/badge/Resilience4j-00C7B7?style=for-the-badge)
-![Zipkin](https://img.shields.io/badge/Zipkin-FF6B6B?style=for-the-badge)
+![Testcontainers](https://img.shields.io/badge/Testcontainers-2496ED?style=for-the-badge)
 
 </div>
 
@@ -31,7 +31,7 @@ A comprehensive microservices-based e-commerce platform built with Spring Boot, 
 
 ## 🎯 Overview
 
-This project implements a scalable online shopping platform using microservices architecture. It showcases enterprise-grade patterns including service discovery, API gateway, circuit breakers, distributed tracing, and event-driven communication.
+This project implements a scalable online shopping platform using microservices architecture. It showcases enterprise-grade patterns including service discovery, API gateway, circuit breakers, and event-driven communication.
 
 ## 🏗️ Architecture
 
@@ -65,7 +65,6 @@ This project implements a scalable online shopping platform using microservices 
 - **Service Discovery**: Netflix Eureka for dynamic service registration and discovery
 - **Circuit Breaker**: Resilience4j for fault tolerance and graceful degradation
 - **Event Bus**: Apache Kafka for asynchronous inter-service communication
-- **Distributed Tracing**: Zipkin for request tracing across microservices
 
 ## 🔧 Microservices
 
@@ -151,8 +150,6 @@ Service registry for dynamic service discovery.
 
 ### Observability
 - **Spring Boot Actuator**: Application monitoring
-- **Zipkin**: Distributed tracing
-- **Spring Cloud Sleuth**: Trace ID generation
 
 ### DevOps
 - **Docker**: Containerization
@@ -183,8 +180,8 @@ Single entry point for all API requests with centralized security, routing, and 
 ### 5. Containerized Testing
 Testcontainers for integration tests with real database instances, ensuring test reliability without local setup.
 
-### 6. Distributed Tracing
-End-to-end request tracing across all microservices for debugging and performance monitoring.
+### 6. Monitoring with Actuator
+Spring Boot Actuator endpoints for health checks and circuit breaker monitoring.
 
 ## 🚀 Getting Started
 
@@ -213,7 +210,6 @@ This starts:
 - Kafka (Port 9092)
 - MongoDB (Port 27017)
 - Keycloak (Port 8181)
-- Zipkin (Port 9411)
 
 3. **Build all services**
 ```bash
@@ -252,7 +248,6 @@ cd notification-service && mvn spring-boot:run
 | Inventory Service | 8082 |
 | Discovery Server | 8761 |
 | Keycloak | 8181 |
-| Zipkin | 9411 |
 | Kafka | 9092 |
 
 ## 🧪 Testing
@@ -333,12 +328,6 @@ http://localhost:8081/actuator/circuitbreakers
 ```
 Monitor circuit breaker states and metrics.
 
-### Distributed Tracing
-```
-http://localhost:9411
-```
-Access Zipkin UI for request tracing and latency analysis.
-
 ## 🔒 Security
 
 The application uses Keycloak for OAuth2-based authentication and authorization.
@@ -388,4 +377,3 @@ This project is open source and available under the [MIT License](LICENSE).
 
 **Deekshith M**
 - GitHub: [@Deekshith-M13](https://github.com/Deekshith-M13)
-
